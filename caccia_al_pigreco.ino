@@ -7,9 +7,11 @@ const int b3 = 11;
 const int b4 = 12;
 const int b5 = 13;
 
+int[] posPiGreco = { 1, 5, 9, 13,};
+
 bool start = false;
 
-byte heart[8] = {
+byte fantasmino[8] = {
   B00000,
   B01110,
   B11111,
@@ -29,6 +31,16 @@ byte freccia[8] = {
   B00100,
   B00000
 };
+byte Heart[8] = {
+0b00000,
+0b01010,
+0b11111,
+0b11111,
+0b01110,
+0b00100,
+0b00000,
+0b00000
+};
 String msg[2] = {"    Premi il     tasto centrale  per cominciare", "Press the centerbutton to start"};
 
 
@@ -39,8 +51,9 @@ void setup() {
   pinMode(b3, INPUT);
   pinMode(b4, INPUT);
   pinMode(b5, INPUT);
-  lcd.createChar(0, heart);
+  lcd.createChar(0, fantasmino);
   lcd.createChar(1, freccia);
+  lcd.createChar(2, Heart);
   lcd.begin(16, 2);
   lcd.print("IT   selez.   EN");
   lcd.setCursor(2, 1);
@@ -65,33 +78,9 @@ void loop() {
       break;
     }
   }
-
-
-  
-  // put your main code here, to run repeatedly:
-  /*lcd.setCursor(0, 0); // Premi il tasto centrale per cominciare - Press the center button to start
-  lcd.print("Press the center");
-  lcd.setCursor(1, 1);
-  lcd.print("button to start");*/
-  /*lcd.clear();
-  lcd.home();
-  lcd.print("Premi il tasto centrale per cominciare - ");
-
-  for (int posizione = 0; posizione <= 42; posizione++) { // la tua stringa - 16 caselle del display
-    lcd.setCursor(posizione, 1);
-    //lcd.print(posizione);
-    delay(400);
-    lcd.scrollDisplayLeft();
-
-  }
-  Appl3@It..
-  if(digitalRead(b1) == HIGH){
-    lcd.setCursor(0, 0);
-    lcd.createChar(0, heart);
-  }*/
-  
   if(start){
     lcd.clear();
+    startGioco(3);
     delay(10000);
   }else{
     lcd.clear();
@@ -144,61 +133,22 @@ void introduzione(int ciao){
       break;
     }
   }
+}
+
+void startGioco(int vite){
+  
+  stampaVite(vite);
+  
+  delay(100000);
+
+
+
   
 }
-void introduzioneInglese(){
-  
+void stampaVite(int vite){
+  int pos = 16 - vite;
+  lcd.setCursor(pos,0); 
+  for(int i = 0; i < vite; i++ ){
+    lcd.write(byte(2));
+  }
 }
-/*
-void introduzione(){
-  for(int n = 0; n < 2; n++)
-  {
-    lcd.clear();
-    int r = 0;
-    int c = 0; 
-    for (int i = 0; i < msg[ciao].length(); i++) {
-      char ch = msg[ciao].charAt(i);
-      String str = "riga:" + String(r) + " col:" + String(c);
-      Serial.println(str);
-      lcd.setCursor(c, r);
-      lcd.print(ch);
-      delay(100);
-      c++; 
-      if (c == 16) {
-        r++; 
-        c = 0;  
-      }
-      if (r == 2) {
-        r = 0;
-        delay(700);
-        lcd.clear();
-      }
-    }    
-    if(ciao == 0)
-      ciao = 1;
-    else
-      ciao = 0;
-      
-    delay(2000);
-    lcd.clear();
-  }
-  lcd.setCursor(5, 0);
-  lcd.print("start");
-  lcd.setCursor(15, 0);
-  lcd.print("?");
-  //delay(100000);
-  lcd.setCursor(7,2); 
-  lcd.write(byte(1));
-  lcd.setCursor(15,2); 
-  lcd.write(byte(1));
-  while(true){//digitalRead(b3) == LOW && digitalRead(b1) == LOW
-    if(digitalRead(b3) == HIGH){
-      start = true;
-      break;
-    }
-    if(digitalRead(b5) == HIGH){
-      start = false;
-      break;
-    }
-  }
-}*/
