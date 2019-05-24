@@ -221,7 +221,13 @@ void startGioco(){
       int ora = millis();
       if((ora - t1) > 5000){
         Serial.println("tempo");
-        vite--;
+        vite--;  
+        lcd.clear();
+        lcd.setCursor(5,0); 
+        lcd.print("-1 vita");
+        lcd.setCursor(2,1); 
+        lcd.print("Tempo scaduto");
+        delay(2000);
         break;
       }
     }
